@@ -21,4 +21,17 @@ class ModelSpec extends UnitSpec {
     assert(!matrix(0)(0))
   }
 
+  "A GridBuilder" should "build a valid grid" in {
+    val constructibleGrid = GridBuilder.start(2, 2)
+    constructibleGrid(0)(0) = true
+    constructibleGrid(1)(0) = true
+    val grid = constructibleGrid.build
+
+    assert(grid.rows == 2 && grid.columns == 2)
+    assert(grid(0)(0))
+    assert(grid(1)(0))
+    assert(!grid(0)(1))
+    assert(!grid(1)(1))
+  }
+
 }
