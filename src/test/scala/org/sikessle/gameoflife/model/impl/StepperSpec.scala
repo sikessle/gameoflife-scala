@@ -9,6 +9,21 @@ class StepperSpec extends UnitSpec {
     assert(!getStepper.name.isEmpty)
   }
 
+  "OriginalStepper" should "count living neighbors" in {
+    val grid = createGrid(2, 2)
+    assert(OriginalStepper.countLivingNeighbors(grid, 0, 0) == 0)
+    assert(OriginalStepper.countLivingNeighbors(grid, 0, 1) == 0)
+    assert(OriginalStepper.countLivingNeighbors(grid, 1, 0) == 0)
+    assert(OriginalStepper.countLivingNeighbors(grid, 1, 1) == 0)
+  }
+
+  "OriginalStepper" should "should leave a dead grid dead after 1 step" in {
+    val grid = createGrid(2, 2)
+    val newGrid = OriginalStepper.step(grid)
+
+    assertEveryCellMatchesGivenValue(newGrid, value = false)
+  }
+
   "OriginalStepper" should "obey living cell rules" in {
     // must stay alive
     assert(OriginalStepper.nextStateOfLivingCell(2))

@@ -6,13 +6,17 @@ import org.sikessle.gameoflife.model.{Figure, Grid}
 
 trait Controller extends Observable {
 
+  def quitGame(): Unit
+
   def grid: Grid
+
+  def gameRunning: Boolean
 
   def killAllCells(): Unit
 
   def setGridSize(rows: Int, columns: Int): Unit
 
-  def stepNGenerations(n: Int): Unit
+  def stepOneGeneration(): Unit
 
   def setCellToLivingAtPosition(row: Int, column: Int): Unit
 

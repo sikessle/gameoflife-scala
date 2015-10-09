@@ -10,44 +10,45 @@ class GridControllerImpl extends Controller {
   val GridInitColumns = 20
   var grid = createGrid(GridInitRows, GridInitColumns)
   var steppedGenerations = 0
+  var gameRunning = true
 
   override def setGridSize(rows: Int, columns: Int): Unit = {
     grid = copyGridAsConstructible(grid, rows, columns).build()
-    setChangedAndNotify
+    setChangedAndNotify()
   }
 
-  override def stepNGenerations(n: Int): Unit = {
-    for (i <- 0 until n) {
-      grid = stepOneGeneration(grid, getStepper.step)
-      steppedGenerations += 1
-      setChangedAndNotify
-    }
+  override def stepOneGeneration(): Unit = {
+    grid = model.stepOneGeneration(grid, getStepper.step)
+    steppedGenerations += 1
+    setChangedAndNotify()
   }
 
   override def setCellToLivingAtPosition(row: Int, column: Int): Unit = {
     grid = changeCell(grid, row, column, value = true)
-    setChangedAndNotify
+    setChangedAndNotify()
   }
 
   override def setCellToDeadAtPosition(row: Int, column: Int): Unit = {
     grid = changeCell(grid, row, column, value = false)
-    setChangedAndNotify
+    setChangedAndNotify()
   }
 
-  override def killAllCells: Unit = {
+  override def killAllCells(): Unit = {
     grid = model.killAllCells(grid)
-    setChangedAndNotify
+    setChangedAndNotify()
   }
 
   override def spawnFigure(figure: Figure, row: Int, column: Int): Unit = {
     grid = model.spawnFigure(grid, figure.coordinates, row, column)
-    setChangedAndNotify
+    setChangedAndNotify()
   }
 
   override def stepperName: String = getStepper.name
 
   private def setChangedAndNotify(): Unit = {
     setChanged()
-    notify()
+    notifyObservers()
   }
+
+  override def quitGame: Unit = gameRunning = false
 }
