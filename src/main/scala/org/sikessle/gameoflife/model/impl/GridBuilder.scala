@@ -3,7 +3,6 @@ package org.sikessle.gameoflife.model.impl
 import org.sikessle.gameoflife.model.Grid
 
 object GridBuilder {
-
   def start(rows: Int, columns: Int): Constructible = new Constructible(rows, columns)
 
   class Constructible(rows: Int, columns: Int) {

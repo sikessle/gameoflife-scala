@@ -4,11 +4,6 @@ import scala.collection.BitSet
 
 package object grid {
 
- /* def createGrid(rows: Int, columns:Int): BitSet = {
-    require(rows >= 1 && columns >= 1)
-
-  }*/
-
 }
 
 

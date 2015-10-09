@@ -2,8 +2,8 @@ package org.sikessle.gameoflife.model.impl
 
 import org.sikessle.gameoflife.model.Grid
 
-class GridImpl(copyCells: BitMatrix) extends Grid {
-  private val cells = new BitMatrix(copyCells.rows, copyCells.columns)
+class GridImpl(cellsState: BitMatrix) extends Grid {
+  private val cells = new BitMatrix(cellsState.rows, cellsState.columns)
 
   override def rows: Int = cells.rows
 
@@ -11,7 +11,7 @@ class GridImpl(copyCells: BitMatrix) extends Grid {
 
   for (i <- 0 until cells.rows) {
     for (j <- 0 until cells.columns) {
-      cells(i)(j) = copyCells(i)(j)
+      cells(i)(j) = cellsState(i)(j)
     }
   }
 

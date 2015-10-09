@@ -3,7 +3,6 @@ package org.sikessle.gameoflife.model.impl
 import org.sikessle.gameoflife.UnitSpec
 
 class ModelSpec extends UnitSpec {
-
   val matrix = new BitMatrix(2, 2)
 
   "A BitMatrix" should "have only false cells" in {
@@ -32,6 +31,15 @@ class ModelSpec extends UnitSpec {
     assert(grid(1)(0))
     assert(!grid(0)(1))
     assert(!grid(1)(1))
+  }
+
+  it should "not build a grid with rows or columns less than 1" in {
+    intercept[IllegalArgumentException] {
+      GridBuilder.start(0, 1)
+    }
+    intercept[IllegalArgumentException] {
+      GridBuilder.start(1, 0)
+    }
   }
 
 }
