@@ -10,7 +10,7 @@ class GridBuilderSpec extends UnitSpec {
     val constructibleGrid = GridBuilder.start(2, 2)
     constructibleGrid(0)(0) = true
     constructibleGrid(1)(0) = true
-    val grid = constructibleGrid.build
+    val grid = constructibleGrid.build()
 
     assert(grid.rows == 2 && grid.columns == 2)
     assert(grid(0)(0))
@@ -31,7 +31,7 @@ class GridBuilderSpec extends UnitSpec {
   "killAllCells" should "generate a dead grid" in {
     val constructibleGrid = GridBuilder.start(2, 1)
     constructibleGrid(0)(0) = true
-    val grid = constructibleGrid.build
+    val grid = constructibleGrid.build()
     val deadGrid = killAllCells(grid)
 
     assert(!deadGrid(0)(0))

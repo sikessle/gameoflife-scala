@@ -13,7 +13,7 @@ object GridBuilder {
 
     def apply(row: Int): ConstructibleRow = new ConstructibleRow(row)
 
-    def build(): Grid = new GridImpl(cells);
+    def build(): Grid = new GridImpl(cells)
 
     class ConstructibleRow(val row: Int) {
       def apply(column: Int): Boolean = cells(row)(column)

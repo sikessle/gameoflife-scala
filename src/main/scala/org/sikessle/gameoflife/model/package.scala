@@ -13,7 +13,7 @@ package object model {
     result
   }
 
-  def killAllCells(grid: Grid): Grid = GridBuilder.start(grid).build
+  def killAllCells(grid: Grid): Grid = GridBuilder.start(grid).build()
 
 }
 

@@ -31,19 +31,19 @@ class StepperSpec extends UnitSpec {
   "AbstractStepper with AlwaysDeadStepper subclass" should "result on only dead cells" in {
     val constructibleGrid = GridBuilder.start(3, 3)
     constructibleGrid(0)(0) = true
-    val grid = constructibleGrid.build
+    val grid = constructibleGrid.build()
 
     val newGenGrid = stepNGenerations(grid, 1, AlwaysDeadStepper.step)
-    assertEveryCellMatchesGivenValue(newGenGrid, false)
+    assertEveryCellMatchesGivenValue(newGenGrid, value = false)
   }
 
   "AbstractStepper with AlwaysAliveStepper subclass" should "result on only living cells" in {
     val constructibleGrid = GridBuilder.start(3, 3)
     constructibleGrid(0)(0) = true
-    val grid = constructibleGrid.build
+    val grid = constructibleGrid.build()
 
     val newGenGrid = stepNGenerations(grid, 1, AlwaysAliveStepper.step)
-    assertEveryCellMatchesGivenValue(newGenGrid, true)
+    assertEveryCellMatchesGivenValue(newGenGrid, value = true)
   }
 
   def assertEveryCellMatchesGivenValue(grid: Grid, value: Boolean) = {

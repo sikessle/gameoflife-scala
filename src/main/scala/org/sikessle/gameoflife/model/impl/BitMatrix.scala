@@ -1,9 +1,9 @@
 package org.sikessle.gameoflife.model.impl
 
-import scala.collection.mutable.BitSet
+import scala.collection.mutable
 
 class BitMatrix(val rows: Int, val columns: Int) {
-  private val matrix = new BitSet(rows * columns)
+  private val matrix = new mutable.BitSet(rows * columns)
 
   require(rows >= 1 && columns >= 1)
 
