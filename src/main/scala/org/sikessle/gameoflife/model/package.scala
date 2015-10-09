@@ -1,38 +1,24 @@
-package org.sikessle.gameoflife.model
+package org.sikessle.gameoflife
 
-import scala.collection.BitSet
+import org.sikessle.gameoflife.model.impl.{GridBuilder, OriginalStepper}
 
-package object grid {
+package object model {
+  def getStepper: Stepper = OriginalStepper
+
+  def stepNGenerations(grid: Grid, generations: Int, stepper: Grid => Grid): Grid = {
+    var result = grid
+    for (i <- 0 until generations) {
+      result = stepper(result)
+    }
+    result
+  }
+
+  def killAllCells(grid: Grid): Grid = GridBuilder.start(grid).build
 
 }
 
 
-
-
-//def getCells
-//
-//boolean[][] getCells();
-//
-//void setCells (boolean[][] cells);
-//
-//int getNumberOfRows();
-//
-//int getNumberOfColumns();
-//
-//void setGridSize(int rows, int columns);
-//
-//void stepNGenerations (int numberOfGenerations);
-//
-//void changeCell(int row, int column, boolean alive);
-//
-//void killAllCells();
-//
-//String getGenerationStrategyName();
-//
-//void setGenerationStrategy (GenerationStrategyPlugin generationStrategy);
 //
 //void spawnFigure(Figure figure, int row, int column);
 //
-//int getNumberOfSteppedGenerations();
-//
-//void setNumberOfSteppedGenerations (int generations);
+

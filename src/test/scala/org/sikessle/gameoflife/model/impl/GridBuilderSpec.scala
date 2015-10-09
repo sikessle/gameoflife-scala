@@ -2,23 +2,9 @@ package org.sikessle.gameoflife.model.impl
 
 import org.sikessle.gameoflife.UnitSpec
 
-class ModelSpec extends UnitSpec {
-  val matrix = new BitMatrix(2, 2)
+import org.sikessle.gameoflife.model._
 
-  "A BitMatrix" should "have only false cells" in {
-    for (i <- 0 until matrix.rows) {
-      for (j <- 0 until matrix.columns) {
-        assert(!matrix(i)(j))
-      }
-    }
-  }
-
-  it should "be able to have false and true cells" in {
-    matrix(0)(0) = true
-    assert(matrix(0)(0))
-    matrix(0)(0) = false
-    assert(!matrix(0)(0))
-  }
+class GridBuilderSpec extends UnitSpec {
 
   "A GridBuilder" should "build a valid grid" in {
     val constructibleGrid = GridBuilder.start(2, 2)
@@ -40,6 +26,15 @@ class ModelSpec extends UnitSpec {
     intercept[IllegalArgumentException] {
       GridBuilder.start(1, 0)
     }
+  }
+
+  "killAllCells" should "generate a dead grid" in {
+    val constructibleGrid = GridBuilder.start(2, 1)
+    constructibleGrid(0)(0) = true
+    val grid = constructibleGrid.build
+    val deadGrid = killAllCells(grid)
+
+    assert(!deadGrid(0)(0))
   }
 
 }
