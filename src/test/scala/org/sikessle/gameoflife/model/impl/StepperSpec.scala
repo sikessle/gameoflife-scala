@@ -33,7 +33,7 @@ class StepperSpec extends UnitSpec {
     constructibleGrid(0)(0) = true
     val grid = constructibleGrid.build()
 
-    val newGenGrid = stepNGenerations(grid, 1, AlwaysDeadStepper.step)
+    val newGenGrid = stepOneGeneration(grid, AlwaysDeadStepper.step)
     assertEveryCellMatchesGivenValue(newGenGrid, value = false)
   }
 
@@ -42,7 +42,7 @@ class StepperSpec extends UnitSpec {
     constructibleGrid(0)(0) = true
     val grid = constructibleGrid.build()
 
-    val newGenGrid = stepNGenerations(grid, 1, AlwaysAliveStepper.step)
+    val newGenGrid = stepOneGeneration(grid, AlwaysAliveStepper.step)
     assertEveryCellMatchesGivenValue(newGenGrid, value = true)
   }
 

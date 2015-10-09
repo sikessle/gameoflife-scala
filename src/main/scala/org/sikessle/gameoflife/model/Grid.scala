@@ -8,7 +8,6 @@ trait Grid {
 
   def apply(row: Int): GridRow
 
-
   trait GridRow {
     def apply(column: Int): Boolean
   }

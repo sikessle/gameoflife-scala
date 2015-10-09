@@ -2,7 +2,10 @@
   <dictionary name="sikessle">
     <words>
       <w>constructible</w>
+      <w>coord</w>
+      <w>coords</w>
       <w>gameoflife</w>
+      <w>pentomino</w>
       <w>scalatest</w>
     </words>
   </dictionary>

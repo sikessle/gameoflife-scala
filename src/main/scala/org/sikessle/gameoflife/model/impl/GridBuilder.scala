@@ -7,9 +7,28 @@ object GridBuilder {
 
   def start(grid: Grid): Constructible = start(grid.rows, grid.columns)
 
-  class Constructible(rows: Int, columns: Int) {
+  def copy(grid: Grid): Constructible = copy(grid, grid.rows, grid.columns)
 
-    private val cells = new BitMatrix(rows, columns)
+  def copy(grid: Grid, newRows: Int, newColumns: Int): Constructible = {
+    val newGrid = start(newRows, newColumns)
+    val copyRowsUntil = math.min(newRows, grid.rows)
+    val copyColumnsUntil = math.min(newColumns, grid.columns)
+
+    for (i <- 0 until copyRowsUntil) {
+      for (j <- 0 until copyColumnsUntil) {
+        newGrid(i)(j) = grid(i)(j)
+      }
+    }
+    newGrid
+  }
+
+  class Constructible(gridRows: Int, gridColumns: Int) {
+
+    private val cells = new BitMatrix(gridRows, gridColumns)
+
+    def rows: Int = cells.rows
+
+    def columns: Int = cells.columns
 
     def apply(row: Int): ConstructibleRow = new ConstructibleRow(row)
 
