@@ -12,7 +12,7 @@ class BitMatrix(val rows: Int, val columns: Int) {
   class BitRow(val row: Int) {
     def apply(column: Int): Boolean = matrix(row * columns + column)
 
-    def update(column: Int, value: Boolean) = matrix(row * columns + column) = value
+    def update(column: Int, value: Boolean): Unit = matrix(row * columns + column) = value
   }
 
 }
