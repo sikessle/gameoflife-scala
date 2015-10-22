@@ -2,9 +2,6 @@ package org.sikessle.gameoflife.view.text
 
 import org.sikessle.gameoflife.controller.Controller
 
-import scala.collection.immutable
-import scala.collection.mutable
-
 class CommandsChain {
 
   private val delayBetweenFramesMs = 100
