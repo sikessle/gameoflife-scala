@@ -26,25 +26,23 @@ abstract class AbstractStepper extends Stepper {
   }
 
   def countLivingNeighbors(grid: Grid, cellRow: Int, cellColumn: Int): Int = {
-    var livingNeighbors = 0
+    val indices = List.range(cellRow - 1, cellRow + 1)
 
-    for (i <- cellRow - 1 until cellRow + 1; if isRowIndexInBound(i, grid)) {
-      livingNeighbors += countLivingNeighborsInRow(grid, i, cellRow, cellColumn)
-    }
+    val livingNeighborsList: List[Int] = for (i <- indices if isRowIndexInBound(i, grid))
+      yield countLivingNeighborsInRow(grid, i, cellRow, cellColumn)
 
-    livingNeighbors
+
+    livingNeighborsList.sum
   }
 
   def countLivingNeighborsInRow(grid: Grid, currentRow: Int, cellRow: Int, cellColumn: Int) = {
-    var livingNeighborsInRow = 0
+    val indices = List.range(cellColumn - 1, cellColumn + 1)
 
-    for (j <- cellColumn - 1 until cellColumn + 1
-         if isColumnIndexInBound(j, grid) && (currentRow != cellRow || j != cellColumn)
-           && grid(currentRow)(j)) {
-      livingNeighborsInRow += 1
-    }
+    val livingNeighborsRowList: List[Int] = for (j <- indices if isColumnIndexInBound(j, grid)
+      && (currentRow != cellRow || j != cellColumn)
+      && grid(currentRow)(j)) yield 1
 
-    livingNeighborsInRow
+    livingNeighborsRowList.sum
   }
 
   private def isRowIndexInBound(i: Int, grid: Grid): Boolean = i >= 0 && i < grid.rows
