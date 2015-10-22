@@ -29,12 +29,14 @@ class TextView(val controller: Controller) extends Observer {
   }
 
   private def interpretLine(line: String): Unit = {
-    val arg = Args(line)
-    println("ARG:"+arg.cmd+":"+arg.size)
-    commandsChain.handle(this, getCommand(line), Args(line))
+    val trimmed = line.trim
+    val cmd = if (trimmed.isEmpty) "" else trimmed.split(" ")(0)
+    val args: Array[String] = if (trimmed.isEmpty) Array[String]()
+    else for (a <- trimmed.split(" ").drop(1)) yield a
+
+    commandsChain.handle(this, TextCommand(cmd, args))
   }
 
-  private def getCommand(line: String): String = line.split(" ")(0)
 
   def quit(): Unit = controller.quitGame()
 
