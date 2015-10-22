@@ -9,12 +9,34 @@ class StepperSpec extends UnitSpec {
     assert(!getStepper.name.isEmpty)
   }
 
-  "OriginalStepper" should "count living neighbors" in {
+  "OriginalStepper" should "count living neighbors = 0 on dead grid" in {
     val grid = createGrid(2, 2)
     assert(OriginalStepper.countLivingNeighbors(grid, 0, 0) == 0)
     assert(OriginalStepper.countLivingNeighbors(grid, 0, 1) == 0)
     assert(OriginalStepper.countLivingNeighbors(grid, 1, 0) == 0)
     assert(OriginalStepper.countLivingNeighbors(grid, 1, 1) == 0)
+  }
+
+  "OriginalStepper count in row" should "count 2" in {
+    val constructible = GridBuilder.start(3, 3)
+    // X _ X
+    constructible(1)(0) = true
+    constructible(1)(2) = true
+    val grid = constructible.build()
+
+    assert(OriginalStepper.countLivingNeighborsInRow(grid, 1, 1, 1) == 2)
+  }
+
+  "OriginalStepper" should "count living neighbors = 3 on living grid" in {
+    val constructible = GridBuilder.start(2, 2)
+    constructible(1)(0) = true
+
+    val grid = constructible.build()
+
+    assert(OriginalStepper.countLivingNeighbors(grid, 0, 0) == 1)
+    assert(OriginalStepper.countLivingNeighbors(grid, 0, 1) == 1)
+    assert(OriginalStepper.countLivingNeighbors(grid, 1, 0) == 0)
+    assert(OriginalStepper.countLivingNeighbors(grid, 1, 1) == 1)
   }
 
   "OriginalStepper" should "should leave a dead grid dead after 1 step" in {
@@ -59,6 +81,20 @@ class StepperSpec extends UnitSpec {
 
     val newGenGrid = stepOneGeneration(grid, AlwaysAliveStepper.step)
     assertEveryCellMatchesGivenValue(newGenGrid, value = true)
+  }
+
+  "AbstractStepper with OriginalStepper subclass" should "obey the original rules" in {
+    val constructibleGrid = GridBuilder.start(10, 10)
+    constructibleGrid(5)(4) = true
+    constructibleGrid(5)(5) = true
+    constructibleGrid(5)(6) = true
+    val grid = constructibleGrid.build()
+
+    val newGenGrid = stepOneGeneration(grid, OriginalStepper.step)
+    // must oscillate
+    assert(newGenGrid(4)(5))
+    assert(newGenGrid(5)(5))
+    assert(newGenGrid(6)(5))
   }
 
   def assertEveryCellMatchesGivenValue(grid: Grid, value: Boolean) = {
