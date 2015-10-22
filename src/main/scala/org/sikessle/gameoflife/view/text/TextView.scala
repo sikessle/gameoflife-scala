@@ -36,7 +36,7 @@ class TextView(val controller: Controller) extends Observer {
 
   private def getCommand(line: String): String = line.split(" ")(0)
 
-  def quit(): Unit = controller.quitGame
+  def quit(): Unit = controller.quitGame()
 
   def addLineToHeaderOutput(header: String): Unit = additionalHeaderOutput += header
 
@@ -85,14 +85,14 @@ class TextView(val controller: Controller) extends Observer {
     val commandDescriptions = commandsChain.getAllCommandDescriptions
     writeOut("Commands: ")
     drawLineBreak()
-    commandDescriptions.map(cmd => {
+    commandDescriptions.foreach(cmd => {
       writeOut(cmd)
       drawLineBreak()
     })
   }
 
   private def drawAndFlushAdditionalHeaderOutput(): Unit = {
-    additionalHeaderOutput.map(header => {
+    additionalHeaderOutput.foreach(header => {
       writeOut(header)
       drawLineBreak()
     })

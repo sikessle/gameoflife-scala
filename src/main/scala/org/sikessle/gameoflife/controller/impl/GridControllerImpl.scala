@@ -50,5 +50,5 @@ class GridControllerImpl extends Controller {
     notifyObservers()
   }
 
-  override def quitGame: Unit = gameRunning = false
+  override def quitGame(): Unit = gameRunning = false
 }

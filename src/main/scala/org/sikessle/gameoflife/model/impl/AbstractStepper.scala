@@ -38,7 +38,7 @@ abstract class AbstractStepper extends Stepper {
   def countLivingNeighborsInRow(grid: Grid, currentRow: Int, cellRow: Int, cellColumn: Int) = {
     var livingNeighborsInRow = 0
 
-    for (j <- cellColumn - 1 until cellColumn + 1;
+    for (j <- cellColumn - 1 until cellColumn + 1
          if isColumnIndexInBound(j, grid) && (currentRow != cellRow || j != cellColumn)
            && grid(currentRow)(j)) {
       livingNeighborsInRow += 1
