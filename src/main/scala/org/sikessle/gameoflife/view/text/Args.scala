@@ -1,23 +1,11 @@
 package org.sikessle.gameoflife.view.text
 
-class Args(inputToParse: String) extends Iterable[String] {
+case class Args(inputToParse: String) extends Iterable[String] {
 
-  private var args: Array[String] = _
+  val cmd: String = if (inputToParse.trim().isEmpty) "" else inputToParse.trim().split(" ")(0)
 
-  parseAndTrim(inputToParse)
-
-  private def parseAndTrim(inputToParse: String): Unit = {
-    val rawArgs = inputToParse.trim().split(" ")
-    if (rawArgs(0).isEmpty) {
-      args = new Array[String](0)
-      return
-    }
-    args = new Array[String](rawArgs.length)
-
-    for (i <- 0 until rawArgs.length) {
-      args(i) = rawArgs(i).trim
-    }
-  }
+  val args: Array[String] = if (inputToParse.trim().isEmpty) Array[String]()
+  else for (a <- inputToParse.trim().split(" ").drop(1)) yield a
 
   override def iterator = args.iterator
 

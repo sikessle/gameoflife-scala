@@ -28,30 +28,15 @@ class TextView(val controller: Controller) extends Observer {
     }
   }
 
-  def readAndInterpretFromArgument(line: String): Unit = {
-    interpretLine(line)
-  }
-
   private def interpretLine(line: String): Unit = {
-    var command = getCommand(line)
-    val arguments = getArguments(line)
-    commandsChain.handle(this, command, arguments)
+    val arg = Args(line)
+    println("ARG:"+arg.cmd+":"+arg.size)
+    commandsChain.handle(this, getCommand(line), Args(line))
   }
 
-  private def getCommand(line: String): String = {
-    line.split(" ")(0)
-  }
+  private def getCommand(line: String): String = line.split(" ")(0)
 
-  private def getArguments(line: String): Args = {
-    val indexOfFirstSpace = line.indexOf(' ')
-    val argsPart = if (indexOfFirstSpace < 0) "" else line.substring(indexOfFirstSpace)
-
-    new Args(argsPart)
-  }
-
-  def quit(): Unit = {
-    controller.quitGame
-  }
+  def quit(): Unit = controller.quitGame
 
   def addLineToHeaderOutput(header: String): Unit = additionalHeaderOutput += header
 
@@ -84,9 +69,7 @@ class TextView(val controller: Controller) extends Observer {
     drawAvailableCommands()
   }
 
-  private def drawVerticalBorder(): Unit = {
-    writeOut("|")
-  }
+  private def drawVerticalBorder(): Unit = writeOut("|")
 
   private def drawHorizontalBorder(): Unit = {
     val length = controller.grid.columns
@@ -102,17 +85,17 @@ class TextView(val controller: Controller) extends Observer {
     val commandDescriptions = commandsChain.getAllCommandDescriptions
     writeOut("Commands: ")
     drawLineBreak()
-    for (command <- commandDescriptions) {
-      writeOut(command)
+    commandDescriptions.map(cmd => {
+      writeOut(cmd)
       drawLineBreak()
-    }
+    })
   }
 
   private def drawAndFlushAdditionalHeaderOutput(): Unit = {
-    for (header <- additionalHeaderOutput) {
+    additionalHeaderOutput.map(header => {
       writeOut(header)
       drawLineBreak()
-    }
+    })
     additionalHeaderOutput.clear()
   }
 

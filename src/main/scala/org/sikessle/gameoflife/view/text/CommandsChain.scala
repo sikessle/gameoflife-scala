@@ -15,9 +15,7 @@ class CommandsChain {
   )
 
   def handle(textView: TextView, command: String, arguments: Args): Unit = {
-    for (cmd <- commands) {
-      cmd.handle(textView, command, arguments)
-    }
+    commands.map(cmd => cmd.handle(textView, command, arguments))
   }
 
   def getAllCommandDescriptions: List[String] = {
