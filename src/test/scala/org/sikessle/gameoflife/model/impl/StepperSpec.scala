@@ -3,18 +3,20 @@ package org.sikessle.gameoflife.model.impl
 import org.sikessle.gameoflife.UnitSpec
 import org.sikessle.gameoflife.model._
 
+//noinspection NameBooleanParameters
 class StepperSpec extends UnitSpec {
 
   "getStepper" should "return a valid stepper" in {
-    assert(!getStepper.name.isEmpty)
+    getStepper.name.isEmpty should be(false)
   }
 
   "OriginalStepper" should "count living neighbors = 0 on dead grid" in {
     val grid = createGrid(2, 2)
-    assert(OriginalStepper.countLivingNeighbors(grid, 0, 0) == 0)
-    assert(OriginalStepper.countLivingNeighbors(grid, 0, 1) == 0)
-    assert(OriginalStepper.countLivingNeighbors(grid, 1, 0) == 0)
-    assert(OriginalStepper.countLivingNeighbors(grid, 1, 1) == 0)
+
+    OriginalStepper.countLivingNeighbors(grid, 0, 0) should be(0)
+    OriginalStepper.countLivingNeighbors(grid, 0, 1) should be(0)
+    OriginalStepper.countLivingNeighbors(grid, 1, 0) should be(0)
+    OriginalStepper.countLivingNeighbors(grid, 1, 1) should be(0)
   }
 
   "OriginalStepper count in row" should "count 2" in {
@@ -24,7 +26,7 @@ class StepperSpec extends UnitSpec {
     constructible(1)(2) = true
     val grid = constructible.build
 
-    assert(OriginalStepper.countLivingNeighborsInRow(grid, 1, 1, 1) == 2)
+    OriginalStepper.countLivingNeighborsInRow(grid, 1, 1, 1) should be(2)
   }
 
   "OriginalStepper" should "count living neighbors = 3 on living grid" in {
@@ -33,36 +35,36 @@ class StepperSpec extends UnitSpec {
 
     val grid = constructible.build
 
-    assert(OriginalStepper.countLivingNeighbors(grid, 0, 0) == 1)
-    assert(OriginalStepper.countLivingNeighbors(grid, 0, 1) == 1)
-    assert(OriginalStepper.countLivingNeighbors(grid, 1, 0) == 0)
-    assert(OriginalStepper.countLivingNeighbors(grid, 1, 1) == 1)
+    OriginalStepper.countLivingNeighbors(grid, 0, 0) should be(1)
+    OriginalStepper.countLivingNeighbors(grid, 0, 1) should be(1)
+    OriginalStepper.countLivingNeighbors(grid, 1, 0) should be(0)
+    OriginalStepper.countLivingNeighbors(grid, 1, 1) should be(1)
   }
 
   "OriginalStepper" should "should leave a dead grid dead after 1 step" in {
     val grid = createGrid(2, 2)
     val newGrid = OriginalStepper.step(grid)
 
-    assertEveryCellMatchesGivenValue(newGrid, value = false)
+    everyCellShouldBe(newGrid, value = false)
   }
 
   "OriginalStepper" should "obey living cell rules" in {
     // must stay alive
-    assert(OriginalStepper.nextStateOfLivingCell(2))
-    assert(OriginalStepper.nextStateOfLivingCell(3))
+    OriginalStepper.nextStateOfLivingCell(2) should be(true)
+    OriginalStepper.nextStateOfLivingCell(3) should be(true)
 
     // must die
-    assert(!OriginalStepper.nextStateOfLivingCell(1))
-    assert(!OriginalStepper.nextStateOfLivingCell(4))
+    OriginalStepper.nextStateOfLivingCell(1) should be(false)
+    OriginalStepper.nextStateOfLivingCell(4) should be(false)
   }
 
   "OriginalStepper" should "obey dead cell rules" in {
     // must be reborn
-    assert(OriginalStepper.nextStateOfDeadCell(3))
+    OriginalStepper.nextStateOfDeadCell(3) should be(true)
 
     // must stay dead
-    assert(!OriginalStepper.nextStateOfDeadCell(2))
-    assert(!OriginalStepper.nextStateOfDeadCell(4))
+    OriginalStepper.nextStateOfDeadCell(2) should be(false)
+    OriginalStepper.nextStateOfDeadCell(4) should be(false)
   }
 
   "AbstractStepper with AlwaysDeadStepper subclass" should "result on only dead cells" in {
@@ -71,7 +73,7 @@ class StepperSpec extends UnitSpec {
     val grid = constructibleGrid.build
 
     val newGenGrid = stepOneGeneration(grid, AlwaysDeadStepper.step)
-    assertEveryCellMatchesGivenValue(newGenGrid, value = false)
+    everyCellShouldBe(newGenGrid, value = false)
   }
 
   "AbstractStepper with AlwaysAliveStepper subclass" should "result on only living cells" in {
@@ -80,7 +82,7 @@ class StepperSpec extends UnitSpec {
     val grid = constructibleGrid.build
 
     val newGenGrid = stepOneGeneration(grid, AlwaysAliveStepper.step)
-    assertEveryCellMatchesGivenValue(newGenGrid, value = true)
+    everyCellShouldBe(newGenGrid, value = true)
   }
 
   "AbstractStepper with OriginalStepper subclass" should "obey the original rules" in {
@@ -92,15 +94,15 @@ class StepperSpec extends UnitSpec {
 
     val newGenGrid = stepOneGeneration(grid, OriginalStepper.step)
     // must oscillate
-    assert(newGenGrid(4)(5))
-    assert(newGenGrid(5)(5))
-    assert(newGenGrid(6)(5))
+    newGenGrid(4)(5) should be(true)
+    newGenGrid(5)(5) should be(true)
+    newGenGrid(6)(5) should be(true)
   }
 
-  def assertEveryCellMatchesGivenValue(grid: Grid, value: Boolean) = {
+  def everyCellShouldBe(grid: Grid, value: Boolean) = {
     for (i <- 0 until grid.rows) {
       for (j <- 0 until grid.columns) {
-        assert(grid(i)(j) == value)
+        grid(i)(j) should be(value)
       }
     }
   }

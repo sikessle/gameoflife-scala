@@ -3,6 +3,7 @@ package org.sikessle.gameoflife.model.impl
 import org.sikessle.gameoflife.UnitSpec
 import org.sikessle.gameoflife.model._
 
+//noinspection NameBooleanParameters
 class FigureSpawnSpec extends UnitSpec {
 
   "spawnFigure(1,1)" should "spawn a figure at coordinates (1,1)" in {
@@ -10,6 +11,6 @@ class FigureSpawnSpec extends UnitSpec {
     spawnFigure(grid, GliderFigure.coordinates, 1, 1)
 
     for (coord <- GliderFigure.coordinates) (i: Int, j: Int) =>
-      assert(grid(i + 1)(j + 1))
+      grid(i + 1)(j + 1) should be(true)
   }
 }

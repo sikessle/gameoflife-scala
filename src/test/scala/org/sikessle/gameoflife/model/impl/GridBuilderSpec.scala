@@ -4,6 +4,7 @@ import org.sikessle.gameoflife.UnitSpec
 
 import org.sikessle.gameoflife.model._
 
+//noinspection NameBooleanParameters
 class GridBuilderSpec extends UnitSpec {
 
   "A GridBuilder" should "build a valid grid" in {
@@ -12,11 +13,13 @@ class GridBuilderSpec extends UnitSpec {
     constructibleGrid(1)(0) = true
     val grid = constructibleGrid.build
 
-    assert(grid.rows == 2 && grid.columns == 2)
-    assert(grid(0)(0))
-    assert(grid(1)(0))
-    assert(!grid(0)(1))
-    assert(!grid(1)(1))
+    grid.rows should be(2)
+    grid.columns should be(2)
+
+    grid(0)(0) should be(true)
+    grid(1)(0) should be(true)
+    grid(0)(1) should be(false)
+    grid(1)(1) should be(false)
   }
 
   it should "not build a grid with rows or columns less than 1" in {
@@ -34,7 +37,7 @@ class GridBuilderSpec extends UnitSpec {
     val grid = constructibleGrid.build
     val deadGrid = killAllCells(grid)
 
-    assert(!deadGrid(0)(0))
+    deadGrid(0)(0) should be(false)
   }
 
 }
