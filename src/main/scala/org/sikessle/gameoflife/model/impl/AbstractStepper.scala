@@ -5,14 +5,14 @@ import org.sikessle.gameoflife.model.{Grid, Stepper}
 abstract class AbstractStepper extends Stepper {
 
   override def step(grid: Grid): Grid = {
-    val newGrid = GridBuilder.start(grid)
+    val newGrid = GridBuilder start grid
 
     for (i <- 0 until grid.rows) {
       for (j <- 0 until grid.columns) {
         newGrid(i)(j) = nextStateOfCell(grid, i, j)
       }
     }
-    newGrid.build()
+    newGrid.build
   }
 
   private def nextStateOfCell(grid: Grid, cellRow: Int, cellColumn: Int): Boolean = {

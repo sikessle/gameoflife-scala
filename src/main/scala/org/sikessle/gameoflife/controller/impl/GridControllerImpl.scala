@@ -13,7 +13,7 @@ class GridControllerImpl extends Controller {
   var gameRunning = true
 
   override def setGridSize(rows: Int, columns: Int): Unit = {
-    grid = copyGridAsConstructible(grid, rows, columns).build()
+    grid = copyGridAsConstructible(grid, rows, columns).build
     setChangedAndNotify()
   }
 
@@ -34,7 +34,7 @@ class GridControllerImpl extends Controller {
   }
 
   override def killAllCells(): Unit = {
-    grid = model.killAllCells(grid)
+    grid = model killAllCells grid
     setChangedAndNotify()
   }
 

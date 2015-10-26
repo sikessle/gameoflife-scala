@@ -22,7 +22,7 @@ class StepperSpec extends UnitSpec {
     // X _ X
     constructible(1)(0) = true
     constructible(1)(2) = true
-    val grid = constructible.build()
+    val grid = constructible.build
 
     assert(OriginalStepper.countLivingNeighborsInRow(grid, 1, 1, 1) == 2)
   }
@@ -31,7 +31,7 @@ class StepperSpec extends UnitSpec {
     val constructible = GridBuilder.start(2, 2)
     constructible(1)(0) = true
 
-    val grid = constructible.build()
+    val grid = constructible.build
 
     assert(OriginalStepper.countLivingNeighbors(grid, 0, 0) == 1)
     assert(OriginalStepper.countLivingNeighbors(grid, 0, 1) == 1)
@@ -68,7 +68,7 @@ class StepperSpec extends UnitSpec {
   "AbstractStepper with AlwaysDeadStepper subclass" should "result on only dead cells" in {
     val constructibleGrid = GridBuilder.start(3, 3)
     constructibleGrid(0)(0) = true
-    val grid = constructibleGrid.build()
+    val grid = constructibleGrid.build
 
     val newGenGrid = stepOneGeneration(grid, AlwaysDeadStepper.step)
     assertEveryCellMatchesGivenValue(newGenGrid, value = false)
@@ -77,7 +77,7 @@ class StepperSpec extends UnitSpec {
   "AbstractStepper with AlwaysAliveStepper subclass" should "result on only living cells" in {
     val constructibleGrid = GridBuilder.start(3, 3)
     constructibleGrid(0)(0) = true
-    val grid = constructibleGrid.build()
+    val grid = constructibleGrid.build
 
     val newGenGrid = stepOneGeneration(grid, AlwaysAliveStepper.step)
     assertEveryCellMatchesGivenValue(newGenGrid, value = true)
@@ -88,7 +88,7 @@ class StepperSpec extends UnitSpec {
     constructibleGrid(5)(4) = true
     constructibleGrid(5)(5) = true
     constructibleGrid(5)(6) = true
-    val grid = constructibleGrid.build()
+    val grid = constructibleGrid.build
 
     val newGenGrid = stepOneGeneration(grid, OriginalStepper.step)
     // must oscillate

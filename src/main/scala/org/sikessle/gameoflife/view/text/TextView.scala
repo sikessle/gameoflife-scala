@@ -82,17 +82,16 @@ class TextView(val controller: Controller) extends Observer {
   }
 
   private def drawAvailableCommands(): Unit = {
-    val commandDescriptions = commandsChain.getAllCommandDescriptions
     writeOut("Commands: ")
     drawLineBreak()
-    commandDescriptions.foreach(cmd => {
+    commandsChain.getAllCommandDescriptions foreach(cmd => {
       writeOut(cmd)
       drawLineBreak()
     })
   }
 
   private def drawAndFlushAdditionalHeaderOutput(): Unit = {
-    additionalHeaderOutput.foreach(header => {
+    additionalHeaderOutput foreach(header => {
       writeOut(header)
       drawLineBreak()
     })
