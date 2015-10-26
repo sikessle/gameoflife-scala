@@ -42,9 +42,7 @@ class TextView(val controller: Controller) extends Observer {
 
   def addLineToHeaderOutput(header: String): Unit = additionalHeaderOutput += header
 
-  override def update(o: Observable, arg: scala.Any): Unit = {
-    redraw()
-  }
+  override def update(o: Observable, arg: scala.Any): Unit = redraw()
 
 
   private def redraw(): Unit = {
