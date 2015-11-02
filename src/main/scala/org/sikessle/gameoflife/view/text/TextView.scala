@@ -13,6 +13,7 @@ class TextView(val controller: Controller) extends Observer {
   private val scanner = new java.util.Scanner(System.in)
   private val commandsChain = new CommandsChain
 
+  controller.addObserver(this)
   redraw()
 
   def readAndInterpretInLoopFromInputStream(): Unit = {
