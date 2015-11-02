@@ -1,24 +1,23 @@
 package org.sikessle.gameoflife.view.gui
 
+import java.awt.event.MouseAdapter
+import java.awt.event.MouseEvent
+
 import org.sikessle.gameoflife.controller.Controller
 import org.sikessle.gameoflife.model.Figure
 
-import scala.swing.Reactor
-import scala.swing.event.MouseClicked
 
 
 class FigureSpawnOneTimeReactor(val controller: Controller, val gridPanel: GridDrawingPanel,
-                                val figure: Figure) extends Reactor {
+                                val figure: Figure) extends MouseAdapter {
 
-  listenTo(gridPanel)
+  gridPanel.peer.addMouseListener(this)
 
-  reactions += {
-    case e: MouseClicked =>
-      val row = e.point.y / gridPanel.CellSize
-      val column = e.point.x / gridPanel.CellSize
-      controller.setCellToDeadAtPosition(row, column)
-      controller.spawnFigure(figure, row, column)
-      deafTo(gridPanel)
+  override def mouseClicked(e: MouseEvent): Unit = {
+    val row = e.getY / gridPanel.CellSize
+    val column = e.getX / gridPanel.CellSize
+    controller.spawnFigure(figure, row, column)
+    gridPanel.peer.removeMouseListener(this)
   }
 
 }

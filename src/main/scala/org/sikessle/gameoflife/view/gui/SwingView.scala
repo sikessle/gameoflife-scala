@@ -1,21 +1,28 @@
 package org.sikessle.gameoflife.view.gui
 
+import java.awt.event.{ComponentEvent, ComponentListener}
+
 import org.sikessle.gameoflife.controller.Controller
-import scala.swing.{BorderPanel, Frame}
 
-class SwingView(val controller: Controller) extends Frame {
+import scala.swing.{BorderPanel, Frame, Reactor}
 
-  private val gridPanel = new GridDrawingPanel(controller)
+class SwingView(val controller: Controller) extends Frame with Reactor {
+
+  private val gridPanel = new GridDrawingPanel(controller, () => this.pack())
   private val controlPanel = new ControlPanel(controller)
   private val statusPanel = new StatusPanel(controller)
 
   menuBar = new MyMenuBar(controller, gridPanel)
   resizable = false
   visible = true
+  title = "Game of Life"
 
   contents = new BorderPanel() {
-    add(gridPanel, BorderPanel.Position.North)
-    add(controlPanel, BorderPanel.Position.Center)
+    add(controlPanel, BorderPanel.Position.North)
+    add(gridPanel, BorderPanel.Position.Center)
     add(statusPanel, BorderPanel.Position.South)
   }
+
+  peer.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE)
+  pack()
 }

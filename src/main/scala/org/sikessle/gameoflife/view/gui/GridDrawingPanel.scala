@@ -1,12 +1,14 @@
 package org.sikessle.gameoflife.view.gui
 
 import java.util.{Observable, Observer}
+
 import org.sikessle.gameoflife.controller.Controller
-import scala.swing.event.{MouseDragged, MouseReleased, MouseEvent}
-import scala.swing.{Color, Component, Dimension, _}
+
+import scala.swing.event.{MouseDragged, MouseEvent, MouseReleased}
+import scala.swing.{Color, Dimension, _}
 
 
-class GridDrawingPanel(val controller: Controller) extends Component with Observer {
+class GridDrawingPanel(val controller: Controller, val onResize: () => Unit) extends Panel with Observer {
 
   val CellSize = 30
 
@@ -26,16 +28,22 @@ class GridDrawingPanel(val controller: Controller) extends Component with Observ
     case e: MouseDragged => livingCellReaction(e)
   }
 
+  setSizeAndRepaint()
+
   private def livingCellReaction(e: MouseEvent): Unit = {
     val row = e.point.y / CellSize
     val column = e.point.x / CellSize
     controller.setCellToLivingAtPosition(row, column)
   }
 
+  def setSizeAndRepaint(): Unit = {
+    preferredSize = new Dimension(controller.grid.columns * CellSize, controller.grid.rows * CellSize)
+    repaint()
+    onResize()
+  }
 
   override def update(o: Observable, arg: scala.Any): Unit = {
-    preferredSize = new Dimension(controller.grid.rows * CellSize, controller.grid.columns * CellSize)
-    repaint()
+    setSizeAndRepaint()
   }
 
   override def paintComponent(g: Graphics2D): Unit = {

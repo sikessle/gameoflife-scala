@@ -28,8 +28,14 @@ package object model {
 
   def spawnFigure(grid: Grid, figureCoords: List[(Int, Int)], row: Int, column: Int): Grid = {
     val newGrid = copyGridAsConstructible(grid)
+    // clear first position
+    newGrid(row)(column) =  false
     // coordinates
-    for (coord <- figureCoords) (i: Int, j: Int) => newGrid(row + i)(column + j) = true
+    for (coord <- figureCoords) {
+      val i = coord._1
+      val j = coord._2
+      newGrid(row + i)(column + j) = true
+    }
     newGrid.build
   }
 

@@ -11,6 +11,7 @@ class StatusPanel(val controller: Controller) extends FlowPanel with Observer {
   private val status = new Label
 
   controller.addObserver(this)
+  update(null, null)
 
   contents += status
 

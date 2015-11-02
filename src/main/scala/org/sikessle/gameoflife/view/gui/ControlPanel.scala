@@ -20,23 +20,24 @@ class ControlPanel(val controller: Controller) extends FlowPanel with Observer {
   private val rowsField = new TextField(2)
   private val columnsField = new TextField(2)
   private val stepNGenerationsReactor = new StepNGenerationsReactor(controller, stepNGenerationsField)
-
-  new SetGridSizeReactor(rowsField, columnsField, controller).listenTo(rowsField)
-  new SetGridSizeReactor(rowsField, columnsField, controller).listenTo(columnsField)
-
-  new Reactor {
+  private val resetGridReactor = new Reactor {
     reactions += {
       case _:ActionEvent => controller.killAllCells()
     }
-  }.listenTo(resetGridBtn)
-
-  stepNGenerationsReactor.listenTo(stepNGenerationsBtn)
-
-  new Reactor {
+  }
+  private val stopNGenerationsReactor =new Reactor {
     reactions += {
       case _:ActionEvent => stepNGenerationsReactor.stopIfRunning()
     }
-  }.listenTo(stopStepNGenerationsBtn)
+  }
+  private val rowsFieldReactor = new SetGridSizeReactor(rowsField, columnsField, controller)
+  private val columnsFieldReactor = new SetGridSizeReactor(rowsField, columnsField, controller)
+
+  rowsFieldReactor.listenTo(rowsField)
+  columnsFieldReactor.listenTo(columnsField)
+  resetGridReactor.listenTo(resetGridBtn)
+  stepNGenerationsReactor.listenTo(stepNGenerationsBtn)
+  stopNGenerationsReactor.listenTo(stopStepNGenerationsBtn)
 
   contents += resetGridBtn
   contents += stepNGenerationsBtn

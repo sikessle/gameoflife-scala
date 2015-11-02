@@ -3,14 +3,13 @@ package org.sikessle.gameoflife.view.gui
 import org.sikessle.gameoflife.controller.Controller
 
 import scala.swing._
-import scala.swing.event.ActionEvent
 
 class SetGridSizeReactor(val rowsField: TextField, val columnsField: TextField,
                          val controller: Controller) extends Reactor {
 
 
   reactions += {
-    case _:ActionEvent =>
+    case _:event.EditDone =>
       val rows = getCheckedNumberOfField(rowsField)
       val columns = getCheckedNumberOfField(columnsField)
       controller.setGridSize(rows, columns)
