@@ -29,6 +29,10 @@ class TextView(val controller: Controller) extends Observer {
     }
   }
 
+  def readAndInterpretFromArgument(argument: String): Unit = {
+    interpretLine(argument)
+  }
+
   private def interpretLine(line: String): Unit = {
     val trimmed = line.trim
     val cmd = if (trimmed.isEmpty) "" else trimmed.split(" ")(0)
