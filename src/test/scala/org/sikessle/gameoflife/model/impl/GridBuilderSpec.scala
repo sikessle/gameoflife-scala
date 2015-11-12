@@ -11,6 +11,7 @@ class GridBuilderSpec extends UnitSpec {
     val constructibleGrid = GridBuilder.start(2, 2)
     constructibleGrid(0)(0) = true
     constructibleGrid(1)(0) = true
+
     val grid = constructibleGrid.build
 
     grid.rows should be(2)
@@ -29,6 +30,20 @@ class GridBuilderSpec extends UnitSpec {
     intercept[IllegalArgumentException] {
       GridBuilder.start(1, 0)
     }
+  }
+
+  "A ConstructibleGrid" should "have valid rows, columns properties" in {
+    val constructibleGrid = GridBuilder.start(2, 2)
+
+    constructibleGrid.rows should be(2)
+    constructibleGrid.columns should be(2)
+  }
+
+  "A ConstructibleRow" should "have getters and setters for columns" in {
+    val constructibleRow = GridBuilder.start(2, 2)(0)
+
+    constructibleRow(0) = true
+    constructibleRow(0) should be (true)
   }
 
   "killAllCells" should "generate a dead grid" in {
