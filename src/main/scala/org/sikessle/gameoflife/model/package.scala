@@ -9,9 +9,10 @@ package object model {
   def copyGridAsConstructible(grid: Grid): GridBuilder.Constructible = GridBuilder.copy(grid)
 
   def copyGridAsConstructible(grid: Grid, newRows: Int, newColumns: Int): GridBuilder.Constructible = {
-    GridBuilder copy(grid, newRows, newColumns)
+    GridBuilder.copy(grid, newRows, newColumns)
   }
 
+  // TODO use DI
   def getStepper: Stepper = OriginalStepper
 
   def stepOneGeneration(grid: Grid, stepper: Grid => Grid): Grid = {

@@ -4,11 +4,9 @@ import org.sikessle.gameoflife.controller.Controller
 import org.sikessle.gameoflife.model
 import org.sikessle.gameoflife.model.{Figure, _}
 
-class GridControllerImpl extends Controller {
+class GridControllerImpl(initialGrid: Grid) extends Controller {
 
-  val GridInitRows = 10
-  val GridInitColumns = 20
-  var grid = createGrid(GridInitRows, GridInitColumns)
+  var grid = initialGrid
   var steppedGenerations = 0
   var gameRunning = true
 

@@ -32,6 +32,7 @@ object GridBuilder {
 
     def apply(row: Int): ConstructibleRow = new ConstructibleRow(row)
 
+    // TODO use DI
     def build: Grid = new GridImpl(cells)
 
     class ConstructibleRow(val row: Int) {
