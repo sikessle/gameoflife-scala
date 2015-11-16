@@ -13,10 +13,12 @@ class StepperSpec extends UnitSpec {
   "OriginalStepper" should "count living neighbors = 0 on dead grid" in {
     val grid = createGrid(2, 2)
 
-    OriginalStepper.countLivingNeighbors(grid, 0, 0) should be(0)
-    OriginalStepper.countLivingNeighbors(grid, 0, 1) should be(0)
-    OriginalStepper.countLivingNeighbors(grid, 1, 0) should be(0)
-    OriginalStepper.countLivingNeighbors(grid, 1, 1) should be(0)
+    val stepper = new OriginalStepper
+
+    stepper.countLivingNeighbors(grid, 0, 0) should be(0)
+    stepper.countLivingNeighbors(grid, 0, 1) should be(0)
+    stepper.countLivingNeighbors(grid, 1, 0) should be(0)
+    stepper.countLivingNeighbors(grid, 1, 1) should be(0)
   }
 
   "OriginalStepper count in row" should "count 2" in {
@@ -25,8 +27,9 @@ class StepperSpec extends UnitSpec {
     constructible(1)(0) = true
     constructible(1)(2) = true
     val grid = constructible.build
+    val stepper = new OriginalStepper
 
-    OriginalStepper.countLivingNeighborsInRow(grid, 1, 1, 1) should be(2)
+    stepper.countLivingNeighborsInRow(grid, 1, 1, 1) should be(2)
   }
 
   "OriginalStepper" should "count living neighbors = 3 on living grid" in {
@@ -34,37 +37,43 @@ class StepperSpec extends UnitSpec {
     constructible(1)(0) = true
 
     val grid = constructible.build
+    val stepper = new OriginalStepper
 
-    OriginalStepper.countLivingNeighbors(grid, 0, 0) should be(1)
-    OriginalStepper.countLivingNeighbors(grid, 0, 1) should be(1)
-    OriginalStepper.countLivingNeighbors(grid, 1, 0) should be(0)
-    OriginalStepper.countLivingNeighbors(grid, 1, 1) should be(1)
+    stepper.countLivingNeighbors(grid, 0, 0) should be(1)
+    stepper.countLivingNeighbors(grid, 0, 1) should be(1)
+    stepper.countLivingNeighbors(grid, 1, 0) should be(0)
+    stepper.countLivingNeighbors(grid, 1, 1) should be(1)
   }
 
   "OriginalStepper" should "should leave a dead grid dead after 1 step" in {
     val grid = createGrid(2, 2)
-    val newGrid = OriginalStepper.step(grid)
+    val stepper = new OriginalStepper
+    val newGrid = stepper.step(grid)
 
     everyCellShouldBe(newGrid, value = false)
   }
 
   "OriginalStepper" should "obey living cell rules" in {
+    val stepper = new OriginalStepper
+
     // must stay alive
-    OriginalStepper.nextStateOfLivingCell(2) should be(true)
-    OriginalStepper.nextStateOfLivingCell(3) should be(true)
+    stepper.nextStateOfLivingCell(2) should be(true)
+    stepper.nextStateOfLivingCell(3) should be(true)
 
     // must die
-    OriginalStepper.nextStateOfLivingCell(1) should be(false)
-    OriginalStepper.nextStateOfLivingCell(4) should be(false)
+    stepper.nextStateOfLivingCell(1) should be(false)
+    stepper.nextStateOfLivingCell(4) should be(false)
   }
 
   "OriginalStepper" should "obey dead cell rules" in {
+    val stepper = new OriginalStepper
+
     // must be reborn
-    OriginalStepper.nextStateOfDeadCell(3) should be(true)
+    stepper.nextStateOfDeadCell(3) should be(true)
 
     // must stay dead
-    OriginalStepper.nextStateOfDeadCell(2) should be(false)
-    OriginalStepper.nextStateOfDeadCell(4) should be(false)
+    stepper.nextStateOfDeadCell(2) should be(false)
+    stepper.nextStateOfDeadCell(4) should be(false)
   }
 
   "AbstractStepper with AlwaysDeadStepper subclass" should "result on only dead cells" in {
@@ -91,8 +100,9 @@ class StepperSpec extends UnitSpec {
     constructibleGrid(5)(5) = true
     constructibleGrid(5)(6) = true
     val grid = constructibleGrid.build
+    val stepper = new OriginalStepper
 
-    val newGenGrid = stepOneGeneration(grid, OriginalStepper.step)
+    val newGenGrid = stepOneGeneration(grid, stepper.step)
     // must oscillate
     newGenGrid(4)(5) should be(true)
     newGenGrid(5)(5) should be(true)

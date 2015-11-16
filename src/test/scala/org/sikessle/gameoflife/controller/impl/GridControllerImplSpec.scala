@@ -19,7 +19,7 @@ class GridControllerImplSpec extends UnitSpec {
   }
 
   def testObserverCalled(command: Controller => Unit): Unit = {
-    val controller = new GridControllerImpl(createGrid(10, 10))
+    val controller = new GridControllerImpl()
     var observerCalled = false
 
     controller.addObserver(new Observer {
@@ -34,7 +34,7 @@ class GridControllerImplSpec extends UnitSpec {
   }
 
   "Getters and Setters" should "return correct values" in {
-    val controller = new GridControllerImpl(createGrid(10, 10))
+    val controller = new GridControllerImpl()
     controller.gameRunning should be(true)
     controller.quitGame()
     controller.gameRunning should be(false)

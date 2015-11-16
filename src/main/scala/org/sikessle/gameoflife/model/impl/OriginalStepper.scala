@@ -2,7 +2,7 @@ package org.sikessle.gameoflife.model.impl
 
 import org.sikessle.gameoflife.model.{Grid, Stepper}
 
-object OriginalStepper extends AbstractStepper {
+class OriginalStepper extends AbstractStepper {
 
   override def name: String = "Original World (23/3)"
 

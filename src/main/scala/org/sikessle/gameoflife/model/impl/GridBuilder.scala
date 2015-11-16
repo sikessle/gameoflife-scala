@@ -1,8 +1,13 @@
 package org.sikessle.gameoflife.model.impl
 
-import org.sikessle.gameoflife.model.Grid
+import com.google.inject.Guice
+import org.sikessle.gameoflife.BaseModule
+import org.sikessle.gameoflife.model.{GridFactory, Grid}
 
 object GridBuilder {
+
+  private val injector = Guice.createInjector(new BaseModule)
+
   def start(rows: Int, columns: Int): Constructible = new Constructible(rows, columns)
 
   def start(grid: Grid): Constructible = start(grid.rows, grid.columns)
@@ -32,8 +37,11 @@ object GridBuilder {
 
     def apply(row: Int): ConstructibleRow = new ConstructibleRow(row)
 
-    // TODO use DI
-    def build: Grid = new GridImpl(cells)
+    def build: Grid = {
+      import net.codingwell.scalaguice.InjectorExtensions._
+      val factory = injector.instance[GridFactory]
+      factory.build(cells)
+    }
 
     class ConstructibleRow(val row: Int) {
       def apply(column: Int): Boolean = cells(row)(column)

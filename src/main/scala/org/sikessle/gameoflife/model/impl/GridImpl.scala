@@ -2,7 +2,7 @@ package org.sikessle.gameoflife.model.impl
 
 import org.sikessle.gameoflife.model.Grid
 
-class GridImpl(cellsState: BitMatrix) extends Grid {
+class GridImpl (cellsState: BitMatrix) extends Grid {
   private val cells = new BitMatrix(cellsState.rows, cellsState.columns)
 
   // Copy values to ensure immutability

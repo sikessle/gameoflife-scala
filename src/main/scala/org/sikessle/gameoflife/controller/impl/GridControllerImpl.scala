@@ -1,12 +1,13 @@
 package org.sikessle.gameoflife.controller.impl
 
+import com.google.inject.Inject
 import org.sikessle.gameoflife.controller.Controller
 import org.sikessle.gameoflife.model
 import org.sikessle.gameoflife.model.{Figure, _}
 
-class GridControllerImpl(initialGrid: Grid) extends Controller {
+class GridControllerImpl extends Controller {
 
-  var grid = initialGrid
+  var grid = createGrid(10, 20)
   var steppedGenerations = 0
   var gameRunning = true
 

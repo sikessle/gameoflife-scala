@@ -1,8 +1,11 @@
 package org.sikessle.gameoflife
 
+import com.google.inject.Guice
 import org.sikessle.gameoflife.model.impl.{GridBuilder, OriginalStepper}
 
 package object model {
+
+  private val injector = Guice.createInjector(new BaseModule)
 
   def createGrid(rows: Int, columns: Int): Grid = GridBuilder.start(rows, columns).build
 
@@ -12,8 +15,10 @@ package object model {
     GridBuilder.copy(grid, newRows, newColumns)
   }
 
-  // TODO use DI
-  def getStepper: Stepper = OriginalStepper
+  def getStepper: Stepper = {
+    import net.codingwell.scalaguice.InjectorExtensions._
+    injector.instance[Stepper]
+  }
 
   def stepOneGeneration(grid: Grid, stepper: Grid => Grid): Grid = {
     stepper(grid)

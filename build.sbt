@@ -10,4 +10,5 @@ libraryDependencies += "org.scala-lang.modules" %% "scala-swing" % "1.0.1"
 
 libraryDependencies += "com.google.inject" % "guice" % "4.0"
 
+libraryDependencies += "net.codingwell" %% "scala-guice" % "4.0.0"
 
