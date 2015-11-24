@@ -8,9 +8,11 @@ class FigureSpawnSpec extends UnitSpec {
 
   "spawnFigure(1,1)" should "spawn a figure at coordinates (1,1)" in {
     val grid = createGrid(10, 10)
-    spawnFigure(grid, GliderFigure.coordinates, 1, 1)
+    val figure = FiguresRegistry("Glider")
 
-    for (coord <- GliderFigure.coordinates) (i: Int, j: Int) =>
+    spawnFigure(grid, figure.coordinates, 1, 1)
+
+    for (coord <- figure.coordinates) (i: Int, j: Int) =>
       grid(i + 1)(j + 1) should be(true)
   }
 }

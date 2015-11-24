@@ -7,7 +7,7 @@ import org.sikessle.gameoflife.model._
 class FiguresSpec extends UnitSpec {
 
   "A GliderFigure" should "have the name \"Glider\"" in {
-    GliderFigure.name should be("Glider")
+    FiguresRegistry("Glider").name should be("Glider")
   }
 
   it should "have correct coordinates" in {
@@ -19,11 +19,11 @@ class FiguresSpec extends UnitSpec {
       (2, 2)
     )
 
-    GliderFigure.coordinates should be(expectedCoords)
+    FiguresRegistry("Glider").coordinates should be(expectedCoords)
   }
 
   "A RPentominoFigure" should "have the name \"r-Pentomino\"" in {
-    RPentominoFigure.name should be("r-Pentomino")
+    FiguresRegistry("r-Pentomino").name should be("r-Pentomino")
   }
 
   it should "have correct coordinates" in {
@@ -35,6 +35,6 @@ class FiguresSpec extends UnitSpec {
       (2, 1)
     )
 
-    RPentominoFigure.coordinates should be(expectedCoords)
+    FiguresRegistry("r-Pentomino").coordinates should be(expectedCoords)
   }
 }

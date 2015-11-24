@@ -4,14 +4,13 @@ import java.util.{Observable, Observer}
 
 import org.sikessle.gameoflife.UnitSpec
 import org.sikessle.gameoflife.controller.Controller
-import org.sikessle.gameoflife.model._
-import org.sikessle.gameoflife.model.impl.GliderFigure
+import org.sikessle.gameoflife.model.impl.FiguresRegistry
 
 class GridControllerImplSpec extends UnitSpec {
 
   "Modifying state" should "trigger an update to all observers" in {
     testObserverCalled((controller: Controller) => controller.stepOneGeneration())
-    testObserverCalled((controller: Controller) => controller.spawnFigure(GliderFigure, 0, 0))
+    testObserverCalled((controller: Controller) => controller.spawnFigure(FiguresRegistry("Glider"), 0, 0))
     testObserverCalled((controller: Controller) => controller.setCellToLivingAtPosition(0, 0))
     testObserverCalled((controller: Controller) => controller.setCellToDeadAtPosition(0, 0))
     testObserverCalled((controller: Controller) => controller.killAllCells())
