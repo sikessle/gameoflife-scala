@@ -9,7 +9,6 @@ import scala.collection.mutable
 
 class TextView(val controller: Controller) extends Observer {
 
-  private val additionalHeaderOutput = new mutable.Queue[String]
   private val scanner = new java.util.Scanner(System.in)
   private val commandsChain = new CommandsChain
 
@@ -45,16 +44,12 @@ class TextView(val controller: Controller) extends Observer {
 
   def quit(): Unit = controller.quitGame()
 
-  def addLineToHeaderOutput(header: String): Unit = additionalHeaderOutput += header
-
   override def update(o: Observable, arg: scala.Any): Unit = redraw()
 
 
   private def redraw(): Unit = {
     val grid = controller.grid
 
-    drawLineBreak()
-    drawAndFlushAdditionalHeaderOutput()
     drawLineBreak()
     drawGenerationStrategy()
     drawLineBreak()
@@ -93,14 +88,6 @@ class TextView(val controller: Controller) extends Observer {
       writeOut(cmd)
       drawLineBreak()
     })
-  }
-
-  private def drawAndFlushAdditionalHeaderOutput(): Unit = {
-    additionalHeaderOutput foreach(header => {
-      writeOut(header)
-      drawLineBreak()
-    })
-    additionalHeaderOutput.clear()
   }
 
   private def drawGenerationStrategy(): Unit = {
